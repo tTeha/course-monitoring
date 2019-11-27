@@ -1,3 +1,35 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
+
+
+class Course(models.Model):
+    DEVELOPMENT = 1
+    DESIGN = 2
+    BUSINESS = 3
+    MAJORS_CHOICES = [
+        (DEVELOPMENT, 'development'),
+        (DESIGN, 'design'),
+        (BUSINESS, 'business'),
+    ]
+    name = models.CharField(max_length=500)
+    time = models.FloatField()
+    seats = models.IntegerField()
+    short_description = models.CharField(max_length=500)
+    main_img = models.ImageField(upload_to='images/')
+    majors = models.PositiveSmallIntegerField(choices=MAJORS_CHOICES)
+    teacher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class StudentCourses(models.Model):
+    student = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student')
+    course = models.ForeignKey(to=Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course.name
