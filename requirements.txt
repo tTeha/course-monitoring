@@ -1,0 +1,19 @@
+pytz  # https://github.com/stub42/pytz
+whitenoise  # https://github.com/evansd/whitenoise
+Pillow  # https://github.com/python-pillow/Pillow
+# Django
+# ------------------------------------------------------------------------------
+django # pyup: < 3.0  # https://www.djangoproject.com/
+
+# Django REST Framework
+djangorestframework  # https://github.com/encode/django-rest-framework
+coreapi  # https://github.com/core-api/python-client
+
+#sql-django
+# ------------------------------------------------------------------------------
+django-mysql # https://github.com/adamchainz/django-mysql
+mysqlclient # https://pypi.org/project/mysqlclient/
+
+#security fields validation
+# ------------------------------------------------------------------------------
+bleach  # https://github.com/mozilla/bleach

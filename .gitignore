@@ -1,0 +1,9 @@
+*.pyc
+.idea
+staticfiles
+__pycache__/
+*.pyo
+venv-khofo/
+courses_monitor/apps/user/migrations/
+courses_monitor/apps/courses/migrations/
+venv-courses/
