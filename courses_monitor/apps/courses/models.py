@@ -5,9 +5,9 @@ from django.db import models
 
 
 class Course(models.Model):
-    DEVELOPMENT = 1
-    DESIGN = 2
-    BUSINESS = 3
+    DEVELOPMENT = 'development'
+    DESIGN = 'design'
+    BUSINESS = 'business'
     MAJORS_CHOICES = [
         (DEVELOPMENT, 'development'),
         (DESIGN, 'design'),
@@ -18,7 +18,7 @@ class Course(models.Model):
     seats = models.IntegerField()
     short_description = models.CharField(max_length=500)
     main_img = models.ImageField(upload_to='images/')
-    majors = models.PositiveSmallIntegerField(choices=MAJORS_CHOICES)
+    majors = models.CharField(choices=MAJORS_CHOICES, max_length=100)
     teacher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
