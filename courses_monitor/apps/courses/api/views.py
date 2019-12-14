@@ -4,8 +4,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import CreateAPIView, RetrieveDestroyAPIView, RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import CourseSerializer, EnrollCoursesSerializer
-from ..models import Course, StudentCourses
+from .serializers import CourseSerializer, CourseMaterialsSerializer, EnrollCoursesSerializer
+from ..models import Course, CourseMaterial, StudentCourses
 
 
 class CoursesList(viewsets.ModelViewSet):
@@ -33,7 +33,20 @@ class CourseRUDView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Course.objects.filter(teacher_id=self.kwargs['spk'])
+    
 
+class CourseMaterialsCreateView(ListCreateAPIView):
+    lookup_field = 'pk'
+    serializer_class = CourseMaterialsSerializer
+
+    def get_queryset(self):
+        return CourseMaterial.objects.filter(course_id=self.kwargs['pk'])
+
+    def perform_create(self, serializer):
+        posted_data = serializer.validated_data
+        posted_data['course_id'] = self.kwargs['pk']
+        return serializer.save()
+    
 
 class EnrollCoursesCreateView(ListCreateAPIView):
     lookup_field = 'pk'
@@ -54,6 +67,7 @@ class EnrollCoursesRUDView(RetrieveDestroyAPIView):
 
     def get_queryset(self):
         return StudentCourses.objects.filter(student_id=self.kwargs['spk'])
+
 
 
 class StudentCoursesListView(ListAPIView):
@@ -80,3 +94,5 @@ class StudentCourseRetrieveView(RetrieveAPIView):
             courses = Course.objects.filter(id__in=courses_list_ids)
             return courses
         return None
+
+

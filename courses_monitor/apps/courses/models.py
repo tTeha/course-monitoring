@@ -27,6 +27,11 @@ class Course(models.Model):
         return self.name
 
 
+class CourseMaterial(models.Model):
+    course = models.ForeignKey(to=Course, on_delete=models.CASCADE)
+    file1 = models.FileField(upload_to='files/')
+
+
 class StudentCourses(models.Model):
     student = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student')
     course = models.ForeignKey(to=Course, on_delete=models.CASCADE)

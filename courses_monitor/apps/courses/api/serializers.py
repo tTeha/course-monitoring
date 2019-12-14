@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Course, StudentCourses
+from ..models import Course, CourseMaterial, StudentCourses
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -8,6 +8,15 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = '__all__'
         extra_kwargs = {
             'teacher': {'read_only': True},
+        }
+
+
+class CourseMaterialsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseMaterial
+        fields = '__all__'
+        extra_kwargs = {
+            'course': {'read_only': True},
         }
 
 
