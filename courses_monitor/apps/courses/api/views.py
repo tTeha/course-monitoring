@@ -69,6 +69,20 @@ class EnrollCoursesRUDView(RetrieveDestroyAPIView):
         return StudentCourses.objects.filter(student_id=self.kwargs['spk'])
 
 
+class NewCoursesListView(ListAPIView):
+    lookup_field = 'pk'
+    serializer_class = CourseSerializer
+
+    def get_queryset(self):
+        courses_list = StudentCourses.objects.filter(student_id=self.kwargs['pk'])
+        if courses_list.exists():
+            courses_list_ids = [course.course_id for course in courses_list]
+            courses = Course.objects.exclude(id__in=courses_list_ids)
+            print("courses_list = ", courses)
+            return courses
+        courses = Course.objects.all()
+        return courses
+
 
 class StudentCoursesListView(ListAPIView):
     lookup_field = 'pk'
